@@ -42,4 +42,9 @@ public class RestRoomController {
         originalRoom.setCapacities(updatedRoom.getCapacities());
         return roomRepository.save(originalRoom);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteRoom(@PathVariable("id") Long id){
+        roomRepository.deleteById(id);
+    }
 }
