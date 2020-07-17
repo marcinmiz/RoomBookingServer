@@ -21,8 +21,34 @@ public class RestBookingsController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBooking(@PathVariable("id") Long id){
+    public void deleteBooking(@PathVariable("id") Long id) {
         bookingRepository.deleteById(id);
+    }
+
+    @GetMapping()
+    public Booking getBooking(@RequestParam("id") Long id) {
+        return bookingRepository.findById(id).get();
+    }
+
+    @PutMapping()
+    public Booking updateBooking(@RequestBody Booking booking){
+//        Booking originalBooking = bookingRepository.findById(booking.getId()).get();
+//        originalBooking.setUser(booking.getUser());
+//        originalBooking.setRoom(booking.getRoom());
+//        originalBooking.setLayout(booking.getLayout());
+//        originalBooking.setDate(booking.getDate());
+//        originalBooking.setStartTime(booking.getStartTime());
+//        originalBooking.setEndTime(booking.getEndTime());
+//        originalBooking.setParticipants(booking.getParticipants());
+//        originalBooking.setTitle(booking.getTitle());
+        System.out.println(booking.getLayout());
+
+        return bookingRepository.save(booking);
+    }
+    @PostMapping()
+    public Booking newBooking(@RequestBody Booking booking){
+        System.out.println(booking.getLayout());
+        return bookingRepository.save(booking);
     }
 
 }
