@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rooms")
 
-public class RestRoomController {
+public class RestRoomsController {
 
     @Autowired
     private RoomRepository roomRepository;
