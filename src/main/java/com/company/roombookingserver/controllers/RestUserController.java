@@ -19,15 +19,15 @@ public class RestUserController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping
+    @GetMapping()
     public List<AngularUser> getAllUsers() throws InterruptedException {
         //Thread.sleep(3000);
-        List<User> list = new ArrayList<>();
-        Iterator<User> iterator = userRepository.findAll().iterator();
-        if (iterator.hasNext()){
-            list.add(iterator.next());
+        Iterable<User> list = userRepository.findAll();
+        List<AngularUser> returnList = new ArrayList<>();
+        for (User user:list) {
+            returnList.add(new AngularUser(user));
         }
-        return list.stream().map(AngularUser::new).collect(Collectors.toList());
+        return returnList;
     }
 
     @GetMapping("/{id}")
@@ -36,13 +36,15 @@ public class RestUserController {
         return new AngularUser(userRepository.findById(id).get());
     }
 
-    @PostMapping
-    public AngularUser newUser(@RequestBody AngularUser user) {
-        return new AngularUser(userRepository.save(user.asUser()));
+    @PostMapping()
+    public AngularUser newUser(@RequestBody User user) {
+        return new AngularUser(userRepository.save(user));
     }
 
-    @PutMapping
-    public AngularUser updateUser(@RequestBody AngularUser updatedUser) {
+    @PutMapping()
+    public AngularUser updateUser(@RequestBody AngularUser updatedUser) throws InterruptedException {
+//        Thread.sleep(1000);
+//        throw new RuntimeException("something went wrong");
         User originalUser = userRepository.findById(updatedUser.getId()).get();
         originalUser.setName(updatedUser.getName());
         return new AngularUser(userRepository.save(originalUser));

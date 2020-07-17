@@ -16,7 +16,7 @@ public class RestRoomController {
     @Autowired
     private RoomRepository roomRepository;
 
-    @GetMapping
+    @GetMapping()
     public List<Room> getAllRooms() {
 //        Thread.sleep(3000);
         return (List<Room>) roomRepository.findAll();
@@ -29,13 +29,13 @@ public class RestRoomController {
         return roomRepository.findById(id).get();
     }
 
-    @PostMapping
+    @PostMapping()
     public Room newRoom(@RequestBody Room room) {
         return roomRepository.save(room);
     }
 
-    @PutMapping
-    public Room updateRoom(Room updatedRoom) {
+    @PutMapping()
+    public Room updateRoom(@RequestBody Room updatedRoom) {
         Room originalRoom = roomRepository.findById(updatedRoom.getId()).get();
         originalRoom.setName(updatedRoom.getName());
         originalRoom.setLocation(updatedRoom.getLocation());
